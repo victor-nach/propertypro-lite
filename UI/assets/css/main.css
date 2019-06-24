@@ -1,0 +1,274 @@
+/*
+================================================
+/* Table of Content
+================================================
+1. General styles
+2. Landing Page
+    2.1 General styles
+    2.2 Login / Signup (animations)
+    2.2 Login / Signup (input field)
+3. Dashboard Area General Styles
+4. Dashboard Account page
+    4.1. general
+    4.2.account balance
+    4.3.account details
+    4.4. balance chart
+    4.5. cards
+    4.6. create new account
+    4.7. transactions table
+    4.8. general dashboardd panel styles
+5. Dashboard New Account page
+
+/* 
+@media (max-width: 768px) {
+
+} 
+
+} */
+
+
+/*
+================================================
+1. General Styles
+================================================
+*/
+
+@import url(general.css);
+
+/*
+================================================
+2. Landing Page
+================================================
+*/
+/*---- 2.2 landing page styles ----*/
+.page-wrap {
+    -webkit-filter: blur(0);
+    filter: blur(0);
+    transition: all .5s ease;
+}
+my-header {
+    -webkit-filter: blur(0);
+    filter: blur(0);
+}
+.show-modal .page-wrap, .show-modal my-header {
+    -webkit-filter: blur(10px);
+    filter: blur(10px);
+}
+.page-wrap::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(rgba(0,0,0, 0), rgba(0, 0, 0, 0));
+    z-index: -99;
+    transition: all .5s ease;
+}
+.show-modal .page-wrap::after {
+    z-index: 0;
+    background: linear-gradient(rgba(0,0,0, .8), rgba(0, 0, 0, .9));
+}
+sign-modal {   
+    z-index: 0;
+    opacity: 0;
+}
+.show-modal sign-modal {
+    animation: show 2s ease both;
+} 
+@keyframes show {
+    0% {  
+        opacity: 0;
+        z-index: 0; 
+    }
+    100% { 
+        opacity: 1;
+        z-index: 999; 
+    }
+}
+
+button.see-all {
+    width: 200px;
+    margin-top: 30px;
+}
+/*---- 2.3 Top section ----*/
+.top-section {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 500px; */
+    padding: 150px 0;
+    background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('../images/bg1.jpeg') fixed;
+    background-size: cover; 
+    margin-bottom: 170px;
+}
+.top-section h2 {
+    color: var(--alt-clr);
+}
+.search {
+    text-align: center;
+}
+.search h2{
+    margin-bottom: 5px;
+    font-size: 45px;
+    /* color: var(--sc-clr); */
+}
+.search p{
+    margin-bottom: 20px;
+    color: var(--alt-clr);
+}
+.search form {
+    display: grid;
+    grid-template-columns: 1fr 1fr .6fr;
+    grid-gap: 5px;
+    margin-bottom: 80px;
+}
+.search select {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--alt-clr);
+    color: var(--alt-clr);
+    padding: 10px;
+    cursor: pointer;
+}
+.search select option {
+    background: transparent;
+    color: var(--pry-clr);
+}
+.search input[type="submit"] {
+    border: 2px solid var(--sc-clr);
+    border-radius: 5px;
+    color: var(--alt-clr);
+    font-weight: 900;
+    background: var(--sc-clr);
+    margin-left: 20px;
+}
+.popular-categories {
+    position: absolute;
+    bottom: -70px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background: transparent;
+}
+.popular-categories > p {
+    color: var(--alt-clr);
+    margin-bottom: 10px; 
+}
+.popular-categories ul{
+    display: grid;
+    grid-template-columns: 130px 130px 130px 130px 130px 130px;
+    grid-template-rows: 130px;
+    grid-gap: 5px;
+    padding: 10px;
+    background: var(--alt-clr);
+    border-radius: 2px;
+    width: auto;
+    text-align: center;
+    justify-content: center;
+}
+.popular-categories a {
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--sc-clr);
+    border-radius: 3px;
+    box-shadow: var(--bx-shdw-1);
+    transition: all .5s ease;
+}
+.popular-categories a:hover {
+    box-shadow: 0px 0px 3px 3px var(--sc-clr);
+}
+.popular-categories i {
+    font-size: 30px;
+    color: var(--sc-clr);
+    margin: 20px 0;
+}
+@media (max-width: 900px) {
+    .top-section {
+        margin-bottom: 300px;
+    }
+    .popular-categories {
+        top: 333px;
+    }
+    .popular-categories ul{
+        grid-template-columns: 130px 130px 130px;
+        grid-template-rows: 130px 130px;
+
+    }
+} 
+@media (max-width: 600px) {
+    .top-section {
+        margin-bottom: 350px;
+    }
+    .popular-categories {
+        top: 360px;
+    }
+    .popular-categories ul{
+        grid-template-columns: 130px 130px;
+        grid-template-rows: 130px 130px 130px;
+    }
+} 
+/*---- 2.4 Featured listing ----*/
+
+/*---- 2.5 How we work ----*/
+.abt-container {
+    width: 80%;
+}
+.abt-container i {
+    color: var(--sc-clr);
+}
+.abt-container h3 {
+    margin-bottom: 10px;
+}
+/*---- 2.6 search by cities ----*/
+.city-search {
+    width: 80%;
+    display: grid;
+    grid-template-areas: 
+       "one one two"
+       "three four four"
+    ;
+    grid-template-rows: 200px 200px;   
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+} 
+@media (max-width: 768px) {
+    .city-search {
+        grid-gap: 10px;
+    } 
+}
+.city-search > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--bx-shdw-1);
+    border-radius: 5px;
+    overflow: hidden;
+    color: var(--alt-clr);
+    padding-top: 80px;
+}
+.city-search h3 {
+    color: var(--alt-clr);
+}
+.city-search div:nth-child(1) {
+    grid-area: one;
+}
+.city-search div:nth-child(2) {
+    grid-area: two;
+}
+.city-search div:nth-child(3) {
+    grid-area: three;
+}
+.city-search div:nth-child(4) {
+    grid-area: four;
+}
+/*---- 2. ----*/
+.abt-us, .popular-listing {
+    background: var(--alt-bg);
+}
+/*---- 2. ----*/
+/*---- 2. ----*/
