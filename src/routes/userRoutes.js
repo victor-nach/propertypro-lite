@@ -6,7 +6,7 @@ import validateResult from '../middleware/validations/validateResult';
 const router = express.Router();
 
 const {
-  checkSignUp,
+  checkSignUp, checkSignIn,
 } = userValidations;
 
 router.post(
@@ -14,6 +14,13 @@ router.post(
   checkSignUp,
   validateResult,
   userController.signup,
+);
+
+router.post(
+  '/signin',
+  checkSignIn,
+  validateResult,
+  userController.signin,
 );
 
 export default router;

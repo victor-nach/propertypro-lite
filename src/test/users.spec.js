@@ -10,8 +10,8 @@ chai.use(sinonChai);
 const { expect } = chai;
 
 const endPoint = '/api/v1/auth';
-// let userToken;
-// let adminToken;
+let userToken;
+let adminToken;
 
 // standard error response
 const assertError = (path, errorCode, user, done, keyString) => chai
@@ -29,6 +29,7 @@ const assertError = (path, errorCode, user, done, keyString) => chai
     done();
   });
 
+// User Sign up
 describe('POST /auth/signup', () => {
   describe('User sign Up', () => {
     it('should create a new user and return 201, and proper response body ', (done) => {
@@ -63,7 +64,7 @@ describe('POST /auth/signup', () => {
           expect(res.body.data.lastName).to.be.a('string');
           expect(res.body.data).to.have.property('email');
           expect(res.body.data.email).to.be.a('string');
-          // userToken = res.body.data.token;
+          userToken = res.body.data.token;
           done();
         });
     });
@@ -263,6 +264,91 @@ describe('POST /auth/signup', () => {
         isAdmin: false,
       };
       assertError('signup', 500, user, done, 'server');
+    });
+  });
+});
+
+// User Sign in
+describe('POST /auth/signin', () => {
+  describe('User sign in', () => {
+    it('should sign in a new user and return 200, and proper response body ', (done) => {
+      const user = {
+        email: 'adama@gmail.com',
+        password: 'bellerin',
+      };
+      chai
+        .request(app)
+        .post(`${endPoint}/signin`)
+        .send(user)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('status');
+          expect(res.body.status).to.be.equal(200);
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.be.a('object');
+          expect(res.body.data).to.have.property('token');
+          expect(res.body.data.token).to.be.a('string');
+          expect(res.body.data).to.have.property('firstName');
+          expect(res.body.data.firstName).to.be.a('string');
+          expect(res.body.data).to.have.property('lastName');
+          expect(res.body.data.lastName).to.be.a('string');
+          expect(res.body.data).to.have.property('email');
+          expect(res.body.data.email).to.be.a('string');
+          adminToken = res.body.data.token;
+          done();
+        });
+    });
+
+    // check email address validations
+    it('should return 400 if email address is omitted', (done) => {
+      const user = {
+        password: 'bellerin',
+      };
+      assertError('signin', 400, user, done, 'kindly put in');
+    });
+
+    it('should return 400 if email address contains whitespace', (done) => {
+      const user = {
+        email: 'ad ama@gmail.com',
+        password: 'bellerin',
+      };
+      assertError('signin', 400, user, done, 'no white spaces');
+    });
+
+    it('should return 404 if email address does not match any email in the database', (done) => {
+      const user = {
+        email: 'christiewu@gmail.com',
+        password: 'Iamthegoat',
+      };
+      assertError('signin', 404, user, done, 'email');
+    });
+
+    // Password validations
+    it('should return 400 if password is omitted', (done) => {
+      const user = {
+        email: 'adama@gmail.com',
+      };
+      assertError('signin', 400, user, done, 'kindly put in');
+    });
+
+    it('should return 403 if password is incorrect', (done) => {
+      const user = {
+        email: 'adama@gmail.com',
+        password: 'tellmemore',
+      };
+      assertError('signin', 403, user, done, 'password');
+    });
+
+    it('should return 500 for a server error', (done) => {
+    // tell the user model function for creating a user to throw an error regardless
+      sinon.stub(userModel, 'signin').throws();
+
+      const user = {
+        email: 'chrisewu@gmail.com',
+        password: 'chrisewu',
+      };
+      assertError('signin', 500, user, done, 'server');
     });
   });
 });
