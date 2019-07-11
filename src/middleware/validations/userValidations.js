@@ -17,8 +17,15 @@ noWhiteSpace(checkSignUp, 'firstName', 'lastName', 'email', 'password', 'phoneNu
 checkBool(checkSignUp, 'isAdmin');
 checkEmail(checkSignUp, 'email');
 
+// validate sign in
+const checkSignIn = [];
+checkEmpty(checkSignIn, 'email', 'password');
+noWhiteSpace(checkSignIn, 'email', 'password');
+checkEmail(checkSignIn, 'email');
+
 const userValidations = {
   checkSignUp,
+  checkSignIn,
 };
 
 export default userValidations;

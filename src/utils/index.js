@@ -26,6 +26,17 @@ class Services {
   }
 
   /**
+   * @static comparePassword
+   * @description compares two passwords
+   * @param { String } password
+   * @param { String } hashedPassword
+   * @returns { Boolean } True or false
+   */
+  static comparePassword(password, hashedPassword) {
+    return bcrypt.compareSync(password, hashedPassword);
+  }
+
+  /**
    * @static camelCased
    * @param { Object } object
    * @description converts keys in an object from snake_case to camelCase
