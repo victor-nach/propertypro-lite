@@ -9,11 +9,14 @@ class ResponseMsg {
    * @memberof ResponseMsg
    */
   static responseErr(res, status, message) {
-    return res.status(status).json({ status, error: message });
+    return res.status(status).json({
+      status: 'error',
+      error: message,
+    });
   }
 
   /**
-   * @static responseErr
+   * @static response
    * @param { Object } res
    * @param { Number } status
    * @param { Object } message
@@ -23,7 +26,7 @@ class ResponseMsg {
    */
   static response(res, status, data) {
     return res.status(status).json({
-      status,
+      status: 'success',
       data,
     });
   }
@@ -39,7 +42,7 @@ class ResponseMsg {
    * @memberof ResponseMsg
    */
   static responseShort(res, status, message) {
-    return res.status(status).json({ status, message });
+    return res.status(status).json({ status: 'success', message });
   }
 }
 

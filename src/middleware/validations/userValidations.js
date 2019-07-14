@@ -1,20 +1,20 @@
 import validatorHelpers from '../../utils/validatorHelpers';
 
 const {
-  checkEmpty, checkAlphabets, checkMinLength, checkBool,
+  checkEmpty, checkAlphabets, checkMinLength,
   checkMaxLength, checkEmail, noWhiteSpace,
 } = validatorHelpers;
 
 // Validate sign up
 const checkSignUp = [];
-checkEmpty(checkSignUp, 'firstName', 'lastName', 'email', 'password', 'phoneNumber', 'address');
-checkAlphabets(checkSignUp, 'firstName', 'lastName');
-checkMinLength(checkSignUp, 3, 'firstName', 'lastName');
+checkEmpty(checkSignUp, 'first_name', 'last_name', 'email', 'password', 'phone_number', 'address');
+checkAlphabets(checkSignUp, 'first_name', 'last_name');
+checkMinLength(checkSignUp, 3, 'first_name', 'last_name');
 checkMinLength(checkSignUp, 6, 'password');
-checkMaxLength(checkSignUp, 20, 'firstName', 'lastName', 'password');
+checkMaxLength(checkSignUp, 20, 'first_name', 'last_name', 'password');
 checkMaxLength(checkSignUp, 50, 'address');
-noWhiteSpace(checkSignUp, 'firstName', 'lastName', 'email', 'password', 'phoneNumber');
-checkBool(checkSignUp, 'isAdmin');
+noWhiteSpace(checkSignUp, 'first_name', 'last_name', 'email', 'password', 'phone_number');
+// checkBool(checkSignUp, 'is_admin');
 checkEmail(checkSignUp, 'email');
 
 // validate sign in

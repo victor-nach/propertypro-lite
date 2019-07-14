@@ -1,5 +1,5 @@
 import db from '../config';
-// import seeders from './seeders';
+import seeders from './seeders';
 
 const test = async () => {
   const text = `
@@ -40,7 +40,7 @@ const test = async () => {
   );
   `;
 
-  await db.query(text);
+  await db.query(text + seeders);
 };
 
 test();

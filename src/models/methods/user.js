@@ -1,6 +1,5 @@
 import db from '../db/config';
 import queries from '../db/queries';
-import utils from '../../utils';
 
 const {
   insertUser, getSingleUser,
@@ -10,23 +9,25 @@ class User {
   /**
    * @static signup
    * @description creates a new user entry in the database
-   * @param { String } firstName
-   * @param { String } lastName
+   * @param { String } first_name
+   * @param { String } last_name
    * @param { String } email
-   * @param { String } hashedPassword
-   * @param { Number } phoneNumber
+   * @param { String } hashed_password
+   * @param { Number } phone_number
    * @param { String } address
-   * @param { boolean } isAdmin
+   * @param { boolean } is_admin
    * @returns { Object } the created user details
    * @memberof User
    */
-  static async signup(firstName, lastName, email, hashedPassword, phoneNumber, address, isAdmin) {
+  static async signup(
+    first_name, last_name, email, hashed_password, phone_number, address, is_admin,
+  ) {
     try {
       const values = [
-        email, firstName, lastName, hashedPassword, phoneNumber, address, isAdmin,
+        email, first_name, last_name, hashed_password, phone_number, address, is_admin,
       ];
       const { rows } = await db.query(insertUser, values);
-      return utils.camelCased(rows[0]);
+      return rows[0];
     } catch (error) {
       throw error;
     }
@@ -48,7 +49,7 @@ class User {
         error.name = 'email_null';
         throw error;
       }
-      return utils.camelCased(rows[0]);
+      return rows[0];
     } catch (error) {
       throw error;
     }

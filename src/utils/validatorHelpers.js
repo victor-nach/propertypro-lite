@@ -86,8 +86,19 @@ class ValidatorHelpers {
    * @param { Boolean } bool
    * @memberof ValidatorHelpers
    */
-  static checkBool(route, bool) {
-    route.push(check(bool).trim().isBoolean().withMessage('please put in a valid user type'));
+  // static checkBool(route, bool) {
+  //   route.push(check(bool).trim().isBoolean().withMessage('please put in a valid user type'));
+  // }
+
+  /**
+   * @static checkEmail
+   * @description checks for  a valid email address
+   * @param { Array } route
+   * @param { Boolean } bool
+   * @memberof ValidatorHelpers
+   */
+  static checkUrl(route, url) {
+    route.push(check(url).trim().isURL().withMessage('please put in a valid image url'));
   }
 }
 

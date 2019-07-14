@@ -8,7 +8,7 @@ const validateResult = (req, res, next) => {
     return res
       .status(400)
       .json({
-        status: 400,
+        status: 'error',
         // return our custom message
         error: errors.array().map(i => i.msg)[0],
       });
