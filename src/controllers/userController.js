@@ -17,18 +17,19 @@ class UserController {
    */
   static async signup(req, res) {
     const {
-      firstName, lastName, email, password, phoneNumber, address, isAdmin,
+      first_name, last_name, email, password, phone_number, address, is_admin,
     } = req.body;
-    const hashedPassword = utils.hashPassword(password);
+    const hashed_password = utils.hashPassword(password);
     try {
-      const user = await userModel
-        .signup(firstName, lastName, email, hashedPassword, phoneNumber, address, isAdmin);
+      const user = await userModel.signup(
+        first_name, last_name, email, hashed_password, phone_number, address, is_admin || false,
+      );
       const token = await utils.generateToken({
         id: user.id,
-        isAdmin: user.isAdmin,
+        is_admin: user.is_admin,
       });
       return response(res, 201, {
-        token, id: user.id, firstName, lastName, email,
+        token, id: user.id, first_name, last_name, email,
       });
     } catch (error) {
       if (error.constraint === 'users_email_key') {
@@ -51,12 +52,12 @@ class UserController {
     const { email, password } = req.body;
     try {
       const {
-        id, firstName, lastName, hashedPassword, isAdmin,
+        id, first_name, last_name, hashed_password, is_admin,
       } = await userModel.signin(email);
-      const token = await utils.generateToken({ id, isAdmin });
-      if (utils.comparePassword(password, hashedPassword) === true) {
+      const token = await utils.generateToken({ id, is_admin });
+      if (utils.comparePassword(password, hashed_password) === true) {
         return response(res, 200, {
-          token, firstName, lastName, email,
+          token, first_name, last_name, email,
         });
       }
       return responseErr(res, 403, 'the password you have entered is invalid');
