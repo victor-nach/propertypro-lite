@@ -65,6 +65,7 @@ before('get user token', (done) => {
     .post(`${endPoint}/auth/signin`)
     .send(userData)
     .end((err, res) => {
+    console.log(res.body)
       userToken = res.body.data.token;
       done();
     });
