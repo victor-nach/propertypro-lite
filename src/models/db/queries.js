@@ -5,4 +5,7 @@ export default {
 
   // Properties
   insertProperty: 'INSERT INTO properties(owner, price, state, city, address, type, image_url) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *;',
+  getSingleProperty: 'SELECT * FROM properties WHERE id = $1;',
+  updatePrice: 'UPDATE properties set price = $1 where id = $2 returning *;',
+  updateStatus: 'UPDATE properties set status = $1 where id = $2 returning *;',
 };

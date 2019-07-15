@@ -1,7 +1,7 @@
 import validatorHelpers from '../../utils/validatorHelpers';
 
 const {
-  checkEmpty, checkMinLength,
+  checkEmpty, checkMinLength, checkNumber,
   checkMaxLength, noWhiteSpace, checkUrl,
 } = validatorHelpers;
 
@@ -15,8 +15,20 @@ checkMaxLength(checkCreateProperty, 20, 'state', 'city', 'type');
 checkMaxLength(checkCreateProperty, 50, 'address');
 noWhiteSpace(checkCreateProperty, 'price');
 
+// validate update price
+const checkUpdatePrice = [];
+checkEmpty(checkUpdatePrice, 'price', 'id');
+checkNumber(checkUpdatePrice, 'price', 'id');
+
+// validate update status
+const checkUpdateStatus = [];
+checkEmpty(checkUpdateStatus, 'id');
+checkNumber(checkUpdateStatus, 'id');
+
 const propertyValidations = {
   checkCreateProperty,
+  checkUpdatePrice,
+  checkUpdateStatus,
 };
 
 export default propertyValidations;
