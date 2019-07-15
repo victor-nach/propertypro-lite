@@ -69,6 +69,19 @@ class ValidatorHelpers {
   }
 
   /**
+   * @static checkMinLength
+   * @description checks the required maximum length of characters for the input field
+   * @param { Array } route
+   * @param { String } fields one or more input fields
+   * @memberof ValidatorHelpers
+   */
+  static checkNumber(path, ...input) {
+    input.forEach((element) => {
+      path.push(check(element).trim().isNumeric({ no_symbols: true }).withMessage(`${element} should be a valid number with no signs`));
+    });
+  }
+
+  /**
    * @static checkEmail
    * @description checks for  a valid email address
    * @param { Array } route

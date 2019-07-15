@@ -9,7 +9,7 @@ const router = express.Router();
 
 const { verifyAdmin, verifyToken } = Auth;
 const {
-  checkCreateProperty,
+  checkCreateProperty, checkUpdatePrice, checkUpdateStatus,
 } = PropertyValidations;
 
 router.post(
@@ -22,4 +22,21 @@ router.post(
   PropertyController.createProperty,
 );
 
+router.patch(
+  '/:id/',
+  verifyToken,
+  verifyAdmin,
+  checkUpdatePrice,
+  validateResult,
+  PropertyController.updatePrice,
+);
+
+router.patch(
+  '/:id/sold/',
+  verifyToken,
+  verifyAdmin,
+  checkUpdateStatus,
+  validateResult,
+  PropertyController.updateStatus,
+);
 export default router;
