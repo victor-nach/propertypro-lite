@@ -23,8 +23,11 @@ class Property {
    */
   static async createProperty(user_id, price, state, city, address, type, image_url) {
     const result = await db.query(getUserById, [user_id]);
-    const values = [user_id, result.rows[0].email, price || 500, state || 'olahoma', city || 'lagos', address || 'benson', type || '3 bed', image_url || 'https://random'];
+    const owner_email = result.rows[0].email;
+    console.log(owner_email);
+    const values = [user_id, owner_email, price || 500, state || 'olahoma', city || 'lagos', address || 'benson', type || '3 bed', image_url || 'https://random'];
     const { rows } = await db.query(insertProperty, values);
+    console.log(rows[0]);
     // const { id, status, created_on } = rows[0];
     // return {
     //   id,

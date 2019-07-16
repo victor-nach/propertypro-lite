@@ -10,7 +10,7 @@
     "test": "export NODE_ENV=test && npm run migration:test && nyc --reporter=text mocha src/test --require @babel/register --timeout 10000 --exit || true",
     "test:dev": "export NODE_ENV=test && nyc --reporter=text mocha src/test --require @babel/register --timeout 10000 --exit || true",
     "migration:test": "export NODE_ENV=test && babel-node src/models/db/migrations",
-    "migration": "export NODE_ENV=production && node bin/models/db/migrations",
+    "migration": "export NODE_ENV=production && node src/models/db/migrations",
     "coverage": "nyc report --reporter=text-lcov | coveralls ",
     "lint": "./node_modules/.bin/eslint ./src",
     "lint:fix": "./node_modules/.bin/eslint ./src --fix || true"

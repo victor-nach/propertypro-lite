@@ -17,8 +17,8 @@ if (process.env.NODE_ENV === 'test') {
     VALUES ('admin@gmail.com', 'admin', 'admin', '${utils.hashPassword('password')}', 92912831212 , 'sadikuu lade', true ),       
         ('user@gmail.com', 'admin', 'admin', '${utils.hashPassword('password')}', 92912831212 , 'sadikuu lade', false );
   
-  INSERT INTO properties ( owner, price, state, city, address, type, image_url)
-        VALUES (2, 123, 'oshodi', 'lagos island', 'ikoyi', '3 bedroom flat' , 'http://res.cloudinary.com/dtbyclgla/image/upload/v1563106186/h9mc2pg4hz5ivwblwglu.jpg');
+  INSERT INTO properties ( owner, owner_email, price, state, city, address, type, image_url)
+        VALUES (2, 'user@gmail.com', 123, 'oshodi', 'lagos island', 'ikoyi', '3 bedroom flat' , 'http://res.cloudinary.com/dtbyclgla/image/upload/v1563106186/h9mc2pg4hz5ivwblwglu.jpg');
         
         
 `;
