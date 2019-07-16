@@ -3,7 +3,7 @@ import queries from '../db/queries';
 
 const {
   insertProperty, getSingleProperty, updatePrice,
-  updateStatus, getAllProperties,
+  updateStatus, getAllProperties, deleteSingleProperty,
 } = queries;
 
 class Property {
@@ -142,6 +142,18 @@ class Property {
       throw error;
     }
     return rows[0];
+  }
+
+  /**
+   * @static deleteProperty
+   * @description deletes a single property
+   * @param { Number } accountNumber
+   * @returns {}
+   * @memberof User
+   */
+  static async deleteProperty(id) {
+    const values = [id];
+    await db.query(deleteSingleProperty, values);
   }
 }
 

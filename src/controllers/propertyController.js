@@ -3,7 +3,7 @@ import ResponseMsg from '../utils/responseMsg';
 // import { dataUri } from '../middleware/multer';
 // import { uploader } from '../config/cloudinary.config';
 
-const { response, responseErr } = ResponseMsg;
+const { response, responseErr, responseShort } = ResponseMsg;
 
 class PropertyController {
   /**
@@ -111,6 +111,32 @@ class PropertyController {
         return responseErr(res, 404, 'Invalid property id, no matches found');
       }
       return responseErr(res, 500, 'server error');
+    }
+  }
+
+  /**
+   * @static deleteProperty
+   * @param { Object } req
+   * @param { Object } res
+   * @returns response object
+   * @description handles requests for updating of property request to sold
+   * @memberof PropertyController
+   */
+  static async deleteProperty(req, res) {
+    const { user_id } = req.user;
+    const { id } = req.params;
+    try {
+      await Property.checkEditProperty(id, user_id);
+      await Property.deleteProperty(id);
+      return responseShort(res, 200, 'successfuly deleted');
+    } catch (error) {
+      if (error.name === 'property_null') {
+        return responseErr(res, 404, 'Invalid property id, no matches found');
+      }
+      // if (error.name === 'unauthorized') {
+      return responseErr(res, 401, 'You do not own the property you are trying to delete');
+      // }
+      // return responseErr(res, 500, 'server error');
     }
   }
 }

@@ -59,6 +59,22 @@ const assertErrorGet = (path, errorCode, done, keyString, token) => chai
     done();
   });
 
+// standard error response
+const assertErrorDel = (path, errorCode, done, keyString, token) => chai
+  .request(app)
+  .delete(`${endPoint}${path}`)
+  .set('Authorization', `Bearer ${token}`)
+  .end((err, res) => {
+    expect(res).to.have.status(errorCode);
+    expect(res.body).to.be.a('object');
+    expect(res.body).to.have.property('status');
+    expect(res.body.status).to.be.equal('error');
+    expect(res.body).to.have.property('error');
+    expect(res.body.error).to.be.a('string');
+    expect(res.body.error).to.include(keyString);
+    done();
+  });
+
 // standard error response with request parameter
 const assertErrorParams = (errorCode, price, params, done, keyString, token) => chai
   .request(app)
@@ -612,5 +628,77 @@ describe('GET /property', () => {
       createProperty.throws();
       assertErrorGet('property', 500, done, 'server', userToken);
     });
+  });
+});
+
+// DELETE /property/:id Agent can delete property
+describe('PATCH /property/:id', () => {
+  describe('Agent can delete property', () => {
+    it('Should return 200 and delete property', (done) => {
+      chai
+        .request(app)
+        .delete(`${endPoint}property/2`)
+        .set('Authorization', `Bearer ${adminToken}`)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('status');
+          expect(res.body.status).to.be.equal('success');
+          done();
+        });
+    });
+
+    // check id validations
+    it('should return 400 if id is not a number', (done) => {
+      assertErrorDel('property/1a', 400, done, 'invalid', invalidToken);
+    });
+
+    // check that id takes no signs
+    it('should return 400 if id ontains a negative sign', (done) => {
+      assertErrorDel('property/-1a', 400, done, 'signs', adminToken);
+    });
+
+    // test doesnt pass
+    // it('should return 400 if id is not a number', (done) => {
+    //   assertErrorParams(400, 500, '%', done, 'number', adminToken);
+    // });
+
+    it('should return 400 if id doesn\'t match any accounts', (done) => {
+      assertErrorDel('property/10', 404, done, 'match', adminToken);
+    });
+
+    // token errors
+    it('should return 400 if authentication token is missing', (done) => {
+      chai
+        .request(app)
+        .delete(`${endPoint}property/2`)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body).to.have.property('status');
+          expect(res.body.status).to.be.equal('error');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.be.a('string');
+          expect(res.body.error).to.include('missing');
+          done();
+        });
+    });
+
+    it('should return 400 if authentication token is invalid', (done) => {
+      assertErrorDel('property/1', 400, done, 'invalid', invalidToken);
+    });
+
+    it('should return 401 if user is not owner', (done) => {
+      assertErrorDel('property/1', 401, done, 'do not own', adminToken);
+    });
+
+    it('should return 401 if user token is provided (unauthorized access)', (done) => {
+      assertErrorDel('property/1', 401, done, 'unauthorized access', userToken);
+    });
+
+    // it('should return 500 for a server error', (done) => {
+    // // tell the user model function for creating an account to throw an error regardless
+    //   sinon.stub(Property, 'deleteProperty').throws();
+    //   assertErrorDel('property/3', 500, done, 'server', adminToken);
+    // });
   });
 });

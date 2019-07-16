@@ -18,7 +18,8 @@ if (process.env.NODE_ENV === 'test') {
         ('user@gmail.com', 'admin', 'admin', '${utils.hashPassword('password')}', 92912831212 , 'sadikuu lade', false );
   
   INSERT INTO properties ( owner, price, state, city, address, type, image_url)
-        VALUES (2, 123, 'oshodi', 'lagos island', 'ikoyi', '3 bedroom flat' , 'http://res.cloudinary.com/dtbyclgla/image/upload/v1563106186/h9mc2pg4hz5ivwblwglu.jpg');     
+        VALUES (2, 123, 'oshodi', 'lagos island', 'ikoyi', '3 bedroom flat' , 'http://res.cloudinary.com/dtbyclgla/image/upload/v1563106186/h9mc2pg4hz5ivwblwglu.jpg');
+        
         
 `;
 }

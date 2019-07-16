@@ -9,7 +9,8 @@ const router = express.Router();
 
 const { verifyAdmin, verifyToken } = Auth;
 const {
-  checkCreateProperty, checkUpdatePrice, checkUpdateStatus, checkSingleProperty,
+  checkCreateProperty, checkUpdatePrice, checkUpdateStatus,
+  checkSingleProperty, checkDeleteProperty,
 } = PropertyValidations;
 
 router.post(
@@ -52,6 +53,15 @@ router.get(
   checkSingleProperty,
   validateResult,
   PropertyController.getProperties,
+);
+
+router.delete(
+  '/:id',
+  verifyToken,
+  verifyAdmin,
+  checkDeleteProperty,
+  validateResult,
+  PropertyController.deleteProperty,
 );
 
 export default router;
