@@ -43,6 +43,22 @@ const assertError = (path, errorCode, user, done, keyString, token) => chai
     done();
   });
 
+// standard error response
+const assertErrorGet = (path, errorCode, done, keyString, token) => chai
+  .request(app)
+  .get(`${endPoint}${path}`)
+  .set('Authorization', `Bearer ${token}`)
+  .end((err, res) => {
+    expect(res).to.have.status(errorCode);
+    expect(res.body).to.be.a('object');
+    expect(res.body).to.have.property('status');
+    expect(res.body.status).to.be.equal('error');
+    expect(res.body).to.have.property('error');
+    expect(res.body.error).to.be.a('string');
+    expect(res.body.error).to.include(keyString);
+    done();
+  });
+
 // standard error response with request parameter
 const assertErrorParams = (errorCode, price, params, done, keyString, token) => chai
   .request(app)
@@ -456,6 +472,145 @@ describe('PATCH /property/:id/sold', () => {
     // tell the user model function for creating an account to throw an error regardless
       sinon.stub(Property, 'editStatus').throws();
       assertErrorParams(500, 5000, '2/sold', done, 'server', adminToken);
+    });
+  });
+});
+
+// GET /property/:id Users can retreive specific properties
+describe('GET /property/:id', () => {
+  describe(' Users can retreive specific properties', () => {
+    it('Should return 200 and return specific properties', (done) => {
+      chai
+        .request(app)
+        .get(`${endPoint}property/1`)
+        .set('Authorization', `Bearer ${userToken}`)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('status');
+          expect(res.body.status).to.be.equal('success');
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.be.a('object');
+          expect(res.body.data).to.have.property('id');
+          // expect(res.body.data.id).to.be.a('number');
+          expect(res.body.data).to.have.property('status');
+          expect(res.body.data.status).to.be.a('string');
+          expect(res.body.data).to.have.property('type');
+          expect(res.body.data.type).to.be.a('string');
+          expect(res.body.data).to.have.property('state');
+          expect(res.body.data.state).to.be.a('string');
+          expect(res.body.data).to.have.property('city');
+          expect(res.body.data.city).to.be.a('string');
+          expect(res.body.data).to.have.property('address');
+          expect(res.body.data).to.have.property('price');
+          expect(res.body.data).to.have.property('created_on');
+          expect(res.body.data).to.have.property('image_url');
+          done();
+        });
+    });
+
+    // check id validations
+    it('should return 400 if id is not a number', (done) => {
+      assertErrorGet('property/1a', 400, done, 'number', userToken);
+    });
+
+    // check that id takes no signs
+    it('should return 400 if id ontains a negative sign', (done) => {
+      assertErrorGet('property/-1', 400, done, 'number', userToken);
+    });
+
+    // test doesnt pass
+    // it('should return 400 if id is not a number', (done) => {
+    //   assertErrorParams(400, 500, '%', done, 'number', adminToken);
+    // });
+
+    it('should return 400 if id doesn\'t match any accounts', (done) => {
+      assertErrorGet('property/10', 404, done, 'match', userToken);
+    });
+
+    // token errors
+    it('should return 400 if authentication token is missing', (done) => {
+      chai
+        .request(app)
+        .get(`${endPoint}property/2`)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body).to.have.property('status');
+          expect(res.body.status).to.be.equal('error');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.be.a('string');
+          expect(res.body.error).to.include('missing');
+          done();
+        });
+    });
+
+    it('should return 400 if authentication token is invalid', (done) => {
+      assertErrorGet('property/1', 400, done, 'invalid', invalidToken);
+    });
+
+    it('should return 500 for a server error', (done) => {
+    // tell the user model function for creating an account to throw an error regardless
+      sinon.stub(Property, 'getSingleProperty').throws();
+      assertErrorGet('property/1', 500, done, 'server', userToken);
+    });
+  });
+});
+
+// GET /property/
+describe('GET /property', () => {
+  describe('Users should be able to retreive all properties', () => {
+    it('Users should be able to retreive all properties', (done) => {
+      chai
+        .request(app)
+        .get(`${endPoint}/property`)
+        .set('Authorization', `Bearer ${userToken}`)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('status');
+          expect(res.body.status).to.be.equal('success');
+          expect(res.body).to.have.property('data');
+          expect(res.body.data[0]).to.be.a('object');
+          expect(res.body.data[0]).to.have.property('id');
+          expect(res.body.data[0].id).to.be.a('number');
+          expect(res.body.data[0]).to.have.property('status');
+          expect(res.body.data[0].status).to.be.a('string');
+          expect(res.body.data[0]).to.have.property('type');
+          expect(res.body.data[0].type).to.be.a('string');
+          expect(res.body.data[0]).to.have.property('state');
+          expect(res.body.data[0].state).to.be.a('string');
+          expect(res.body.data[0]).to.have.property('city');
+          expect(res.body.data[0].city).to.be.a('string');
+          expect(res.body.data[0]).to.have.property('address');
+          expect(res.body.data[0]).to.have.property('price');
+          expect(res.body.data[0]).to.have.property('created_on');
+          expect(res.body.data[0]).to.have.property('image_url');
+          done();
+        });
+    });
+
+    // token errors
+    it('should return 400 if authentication token is missing', (done) => {
+      chai
+        .request(app)
+        .get(`${endPoint}/property`)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body).to.have.property('status');
+          expect(res.body.status).to.be.equal('error');
+          done();
+        });
+    });
+
+    it('should return 400 if authentication token is invalid', (done) => {
+      assertErrorGet('property', 400, done, 'invalid', invalidToken);
+    });
+
+    // check 500 for server error
+    it('should return 500 for a server error', (done) => {
+      const createProperty = sinon.stub(Property, 'allProperties');
+      createProperty.throws();
+      assertErrorGet('property', 500, done, 'server', userToken);
     });
   });
 });

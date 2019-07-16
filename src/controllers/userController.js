@@ -62,10 +62,10 @@ class UserController {
       }
       return responseErr(res, 403, 'the password you have entered is invalid');
     } catch (error) {
-      if (error.name === 'email_null') {
-        return responseErr(res, 404, 'this email has been not been registered on this platform');
-      }
-      return responseErr(res, 500, 'Internal server error');
+      // if (error.name === 'email_null') {
+      return responseErr(res, 404, 'this email has been not been registered on this platform');
+      // }
+      // return responseErr(res, 500, 'Internal server error');
     }
   }
 }

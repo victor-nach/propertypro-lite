@@ -9,7 +9,7 @@ const router = express.Router();
 
 const { verifyAdmin, verifyToken } = Auth;
 const {
-  checkCreateProperty, checkUpdatePrice, checkUpdateStatus,
+  checkCreateProperty, checkUpdatePrice, checkUpdateStatus, checkSingleProperty,
 } = PropertyValidations;
 
 router.post(
@@ -39,4 +39,19 @@ router.patch(
   validateResult,
   PropertyController.updateStatus,
 );
+
+router.get(
+  '/',
+  verifyToken,
+  PropertyController.getProperties,
+);
+
+router.get(
+  '/:id/',
+  verifyToken,
+  checkSingleProperty,
+  validateResult,
+  PropertyController.getProperties,
+);
+
 export default router;

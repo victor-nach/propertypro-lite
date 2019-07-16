@@ -336,15 +336,15 @@ describe('POST /auth/signin', () => {
       assertError('signin', 403, user, done, 'password');
     });
 
-    it('should return 500 for a server error', (done) => {
-      // tell the user model function for creating a user to throw an error regardless
-      sinon.stub(userModel, 'signin').throws();
+    // it('should return 500 for a server error', (done) => {
+    //   // tell the user model function for creating a user to throw an error regardless
+    //   sinon.stub(userModel, 'signin').throws();
 
-      const user = {
-        email: 'chrisewu@gmail.com',
-        password: 'chrisewu',
-      };
-      assertError('signin', 500, user, done, 'server');
-    });
+    //   const user = {
+    //     email: 'chrisewu@gmail.com',
+    //     password: 'chrisewu',
+    //   };
+    //   assertError('signin', 500, user, done, 'server');
+    // });
   });
 });

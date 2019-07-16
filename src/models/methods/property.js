@@ -2,7 +2,8 @@ import db from '../db/config';
 import queries from '../db/queries';
 
 const {
-  insertProperty, getSingleProperty, updatePrice, updateStatus,
+  insertProperty, getSingleProperty, updatePrice,
+  updateStatus, getAllProperties,
 } = queries;
 
 class Property {
@@ -112,6 +113,35 @@ class Property {
       error.name = 'unauthorized';
       throw error;
     }
+  }
+
+  /**
+   * @static allProperties
+   * @description retreives all properties in the database
+   * @returns { Array } an array of all the propertis
+   * @memberof Property
+   */
+  static async allProperties() {
+    const { rows } = await db.query(getAllProperties);
+    return rows;
+  }
+
+  /**
+   * @static getSingleProperty
+   * @description returns a single property
+   * @param { Number }  id id
+   * @returns { Object } the property
+   * @memberof Property
+   */
+  static async getSingleProperty(id) {
+    const values = [id];
+    const { rows } = await db.query(getSingleProperty, values);
+    if (!rows[0]) {
+      const error = new Error();
+      error.name = 'property_null';
+      throw error;
+    }
+    return rows[0];
   }
 }
 

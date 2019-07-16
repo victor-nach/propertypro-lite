@@ -25,10 +25,16 @@ const checkUpdateStatus = [];
 checkEmpty(checkUpdateStatus, 'id');
 checkNumber(checkUpdateStatus, 'id');
 
+// validate get single property
+const checkSingleProperty = [];
+checkEmpty(checkSingleProperty, 'id');
+checkNumber(checkSingleProperty, 'id');
+
 const propertyValidations = {
   checkCreateProperty,
   checkUpdatePrice,
   checkUpdateStatus,
+  checkSingleProperty,
 };
 
 export default propertyValidations;
