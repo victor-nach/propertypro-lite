@@ -18,8 +18,8 @@ router.post(
   // multerUploads,
   verifyToken,
 //   verifyAdmin,
-  checkCreateProperty,
-  validateResult,
+//   checkCreateProperty,
+//   validateResult,
   PropertyController.createProperty,
 );
 
