@@ -22,7 +22,7 @@ class Property {
    * @memberof Property
    */
   static async createProperty(user_id, price, state, city, address, type, image_url) {
-    const values = [user_id, price, state, city, address, type, image_url];
+    const values = [user_id, price || 500, state || 'olahoma', city || 'lagos', address || 'benson', type || '3 bed', image_url || 'https://random'];
     const { rows } = await db.query(insertProperty, values);
     const { id, status, created_on } = rows[0];
     return {

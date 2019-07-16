@@ -7,7 +7,7 @@ const {
 
 // Validate sign up
 const checkCreateProperty = [];
-checkEmpty(checkCreateProperty, 'price', 'state', 'city', 'address', 'type', 'image_url');
+// checkEmpty(checkCreateProperty, 'price', 'state', 'city', 'address', 'type', 'image_url');
 // checkUrl(checkCreateProperty, 'image_url');
 // checkAlphabets(checkCreateProperty, 'type');
 // checkMinLength(checkCreateProperty, 3, 'state', 'city', 'address', 'type');
