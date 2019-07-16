@@ -4,13 +4,13 @@
   "description": "A mini property listing platform",
   "main": "app.js",
   "scripts": {
-    "build": "rm -rf bin && mkdir bin && babel -d ./bin ./src",
+    "build": "rm -rf bin && mkdir bin && babel -d ./bin ./src && node bin/models/db/migrations",
     "start": "node ./bin/app.js",
     "start:dev": "nodemon --exec babel-node src/app.js",
     "test": "export NODE_ENV=test && npm run migration:test && nyc --reporter=text mocha src/test --require @babel/register --timeout 10000 --exit || true",
     "test:dev": "export NODE_ENV=test && nyc --reporter=text mocha src/test --require @babel/register --timeout 10000 --exit || true",
     "migration:test": "export NODE_ENV=test && babel-node src/models/db/migrations",
-    "migration:prod": "export NODE_ENV=production && babel-node src/models/db/migrations",
+    "migration": "export NODE_ENV=production && node bin/models/db/migrations",
     "coverage": "nyc report --reporter=text-lcov | coveralls ",
     "lint": "./node_modules/.bin/eslint ./src",
     "lint:fix": "./node_modules/.bin/eslint ./src --fix || true"
@@ -39,6 +39,7 @@
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "express-validator": "^6.1.1",
+    "heroku-logger": "^0.3.3",
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.1",
     "nodemailer": "^6.2.1",

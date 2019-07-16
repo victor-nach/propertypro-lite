@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import logger from 'heroku-logger';
 // import { resolve } from 'path';
 import router from './routes';
 // import { multerUploads, dataUri } from './middleware/multer';
@@ -32,6 +33,7 @@ app.all('*', (req, res) => {
   });
 });
 
+logger.info('Im here bro on port', PORT);
 app.listen(PORT);
 
 export default app;

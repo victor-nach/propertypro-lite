@@ -1,3 +1,4 @@
+import logger from 'heroku-logger';
 import Property from '../models/methods/property';
 import ResponseMsg from '../utils/responseMsg';
 // import { dataUri } from '../middleware/multer';
@@ -31,6 +32,7 @@ class PropertyController {
         .createProperty(user_id, price, state, city, address, type, image_url);
       return response(res, 200, property);
     } catch (error) {
+      logger.error('im here', error);
       return responseErr(res, 500, 'server error');
     }
   }
