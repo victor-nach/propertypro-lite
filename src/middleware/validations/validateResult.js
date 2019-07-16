@@ -1,3 +1,4 @@
+import logger from 'heroku-logger';
 import { validationResult } from 'express-validator';
 
 const validateResult = (req, res, next) => {
@@ -5,6 +6,7 @@ const validateResult = (req, res, next) => {
 
   // if we have any errors
   if (!errors.isEmpty()) {
+    logger.error('this', errors.array().map(i => i.msg)[0]);
     return res
       .status(400)
       .json({
