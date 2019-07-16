@@ -2,7 +2,7 @@ import db from '../db/config';
 import queries from '../db/queries';
 
 const {
-  insertProperty, getSingleProperty, updatePrice,
+  insertProperty, getSingleProperty, updatePrice, getUserById,
   updateStatus, getAllProperties, deleteSingleProperty,
 } = queries;
 
@@ -22,20 +22,22 @@ class Property {
    * @memberof Property
    */
   static async createProperty(user_id, price, state, city, address, type, image_url) {
-    const values = [user_id, price || 500, state || 'olahoma', city || 'lagos', address || 'benson', type || '3 bed', image_url || 'https://random'];
+    const result = await db.query(getUserById, [user_id]);
+    const values = [user_id, result.rows[0].email, price || 500, state || 'olahoma', city || 'lagos', address || 'benson', type || '3 bed', image_url || 'https://random'];
     const { rows } = await db.query(insertProperty, values);
-    const { id, status, created_on } = rows[0];
-    return {
-      id,
-      status,
-      type,
-      state,
-      city,
-      address,
-      price,
-      created_on,
-      image_url,
-    };
+    // const { id, status, created_on } = rows[0];
+    // return {
+    //   id,
+    //   status,
+    //   type,
+    //   state,
+    //   city,
+    //   address,
+    //   price,
+    //   created_on,
+    //   image_url,
+    // };
+    return rows[0];
   }
 
   /**
@@ -113,6 +115,8 @@ class Property {
       error.name = 'unauthorized';
       throw error;
     }
+    const result = await db.query(getUserById, [user_id]);
+    return result.rows[0].email;
   }
 
   /**
@@ -133,7 +137,7 @@ class Property {
    * @returns { Object } the property
    * @memberof Property
    */
-  static async getSingleProperty(id) {
+  static async getSingleProperty(id, email) {
     const values = [id];
     const { rows } = await db.query(getSingleProperty, values);
     if (!rows[0]) {
