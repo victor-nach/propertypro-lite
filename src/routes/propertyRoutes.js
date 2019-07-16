@@ -17,7 +17,7 @@ router.post(
   '/',
   // multerUploads,
   verifyToken,
-  verifyAdmin,
+  // verifyAdmin,
   checkCreateProperty,
   validateResult,
   PropertyController.createProperty,
