@@ -87,6 +87,32 @@ class PropertyController {
       return responseErr(res, 500, 'server error');
     }
   }
+
+  /**
+   * @static updateStatus
+   * @param { Object } req
+   * @param { Object } res
+   * @returns response object
+   * @description handles requests for updating of property request to sold
+   * @memberof PropertyController
+   */
+  static async getProperties(req, res) {
+    const { id } = req.params;
+    try {
+      let result;
+      if (id) {
+        result = await Property.getSingleProperty(id);
+      } else {
+        result = await Property.allProperties();
+      }
+      return response(res, 200, result);
+    } catch (error) {
+      if (error.name === 'property_null') {
+        return responseErr(res, 404, 'Invalid property id, no matches found');
+      }
+      return responseErr(res, 500, 'server error');
+    }
+  }
 }
 
 export default PropertyController;
