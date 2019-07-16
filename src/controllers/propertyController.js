@@ -131,7 +131,7 @@ class PropertyController {
     try {
       await Property.checkEditProperty(id, user_id);
       await Property.deleteProperty(id);
-      return responseShort(res, 200, 'successfuly deleted');
+      return response(res, 200, { message: 'successfuly deleted' });
     } catch (error) {
       if (error.name === 'property_null') {
         return responseErr(res, 404, 'Invalid property id, no matches found');
