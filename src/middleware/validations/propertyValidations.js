@@ -30,11 +30,17 @@ const checkSingleProperty = [];
 checkEmpty(checkSingleProperty, 'id');
 checkNumber(checkSingleProperty, 'id');
 
+// validate delete property
+const checkDeleteProperty = [];
+checkEmpty(checkDeleteProperty, 'id');
+checkNumber(checkDeleteProperty, 'id');
+
 const propertyValidations = {
   checkCreateProperty,
   checkUpdatePrice,
   checkUpdateStatus,
   checkSingleProperty,
+  checkDeleteProperty,
 };
 
 export default propertyValidations;

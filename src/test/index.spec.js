@@ -1,3 +1,3 @@
 import './app.spec';
-import './users.spec';
 import './property.spec';
+import './users.spec';

@@ -9,4 +9,5 @@ export default {
   updatePrice: 'UPDATE properties set price = $1 where id = $2 returning *;',
   updateStatus: 'UPDATE properties set status = $1 where id = $2 returning *;',
   getAllProperties: 'SELECT * FROM properties;',
+  deleteSingleProperty: 'DELETE FROM properties WHERE id = $1;',
 };
