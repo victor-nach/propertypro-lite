@@ -3,7 +3,7 @@ import { validationResult } from 'express-validator';
 
 const validateResult = (req, res, next) => {
   const errors = validationResult(req);
-  logger.info('res-body', {'reqBody':req.body});
+  logger.info('request', { 'reqBody' : req.body.price });
   // if we have any errors
   if (!errors.isEmpty()) {
     logger.error('this', {'message:': errors.array().map(i => i.msg)[0] });
