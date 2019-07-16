@@ -19,7 +19,7 @@ class PropertyController {
     const {
       price, state, city, address, type, image_url,
     } = req.body;
-    logger.info('res-body', { reqBody: req.body });
+    // logger.info('res-body', { reqBody: req.body });
     const { user_id } = req.user;
     try {
       // ---- get image url from cloudinary directly instead of uplading it ---

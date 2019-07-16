@@ -2,6 +2,7 @@ import express from 'express';
 import PropertyController from '../controllers/propertyController';
 import PropertyValidations from '../middleware/validations/propertyValidations';
 import validateResult from '../middleware/validations/validateResult';
+import validateResult1 from '../middleware/validations/validateResult1';
 import Auth from '../middleware/authentication/auth';
 // import { multerUploads } from '../middleware/multer';
 
@@ -19,7 +20,7 @@ router.post(
   verifyToken,
   // verifyAdmin,
   checkCreateProperty,
-  validateResult,
+  validateResult1,
   PropertyController.createProperty,
 );
 
