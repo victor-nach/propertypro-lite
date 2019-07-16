@@ -17,7 +17,7 @@ router.post(
   '/',
   // multerUploads,
   verifyToken,
-  verifyAdmin,
+//   verifyAdmin,
   checkCreateProperty,
   validateResult,
   PropertyController.createProperty,
@@ -26,7 +26,7 @@ router.post(
 router.patch(
   '/:id/',
   verifyToken,
-  verifyAdmin,
+//   verifyAdmin,
   checkUpdatePrice,
   validateResult,
   PropertyController.updatePrice,
@@ -35,7 +35,7 @@ router.patch(
 router.patch(
   '/:id/sold/',
   verifyToken,
-  verifyAdmin,
+//   verifyAdmin,
   checkUpdateStatus,
   validateResult,
   PropertyController.updateStatus,
@@ -58,7 +58,7 @@ router.get(
 router.delete(
   '/:id',
   verifyToken,
-  verifyAdmin,
+//   verifyAdmin,
   checkDeleteProperty,
   validateResult,
   PropertyController.deleteProperty,
