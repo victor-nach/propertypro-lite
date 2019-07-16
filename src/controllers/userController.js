@@ -32,6 +32,7 @@ class UserController {
         token, id: user.id, first_name, last_name, email,
       });
     } catch (error) {
+      console.log(error);
       if (error.constraint === 'users_email_key') {
         return responseErr(res, 409, 'Kindly use another email, this email address has already been used');
       }
