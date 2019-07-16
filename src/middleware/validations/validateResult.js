@@ -6,7 +6,7 @@ const validateResult = (req, res, next) => {
 
   // if we have any errors
   if (!errors.isEmpty()) {
-    logger.error('this', errors.array().map(i => i.msg)[0]);
+    logger.error('this', {'message:': errors.array().map(i => i.msg)[0] });
     return res
       .status(400)
       .json({

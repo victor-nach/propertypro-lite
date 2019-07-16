@@ -33,7 +33,7 @@ app.all('*', (req, res) => {
   });
 });
 
-logger.info('Im here bro on port', PORT);
+logger.info('Im here bro on port', {'port': PORT });
 app.listen(PORT);
 
 export default app;
